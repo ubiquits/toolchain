@@ -1,0 +1,40 @@
+version: v1.5.0
+ignore: {}
+patch:
+  'npm:engine.io-client:20160426':
+    - '@xiphiaz/vantage > socket.io-client > engine.io-client':
+        patched: '2016-06-23T17:02:31.585Z'
+    - '@xiphiaz/vantage > socket.io > socket.io-client > engine.io-client':
+        patched: '2016-06-23T17:02:31.585Z'
+  'npm:marked:20150520':
+    - metalsmith-markdown > marked:
+        patched: '2016-06-23T17:02:31.585Z'
+    - typedoc > marked:
+        patched: '2016-06-23T17:02:31.585Z'
+  'npm:minimatch:20160620':
+    - gulp > vinyl-fs > glob-stream > minimatch:
+        patched: '2016-06-23T17:02:31.585Z'
+    - gulp-nodemon > gulp > vinyl-fs > glob-stream > minimatch:
+        patched: '2016-06-23T17:02:31.585Z'
+    - typescript-formatter > glob-expand > glob > minimatch:
+        patched: '2016-06-23T17:02:31.585Z'
+    - gulp > vinyl-fs > glob-stream > glob > minimatch:
+        patched: '2016-06-23T17:02:31.585Z'
+    - gulp-nodemon > gulp > vinyl-fs > glob-stream > glob > minimatch:
+        patched: '2016-06-23T17:02:31.585Z'
+    - gulp-istanbul > istanbul > fileset > minimatch:
+        patched: '2016-06-23T17:02:31.585Z'
+    - karma-coverage > istanbul > fileset > minimatch:
+        patched: '2016-06-23T17:02:31.585Z'
+    - gulp-istanbul > istanbul-threshold-checker > istanbul > fileset > minimatch:
+        patched: '2016-06-23T17:02:31.585Z'
+    - remap-istanbul > istanbul > fileset > minimatch:
+        patched: '2016-06-23T17:02:31.585Z'
+    - sourcemap-istanbul-instrumenter-loader > istanbul > fileset > minimatch:
+        patched: '2016-06-23T17:02:31.585Z'
+  'npm:ms:20151024':
+    - '@xiphiaz/metalsmith-watch > tiny-lr > debug > ms':
+        patched: '2016-06-23T17:02:31.585Z'
+  'npm:request:20160119':
+    - coveralls > request:
+        patched: '2016-06-23T17:02:31.585Z'
