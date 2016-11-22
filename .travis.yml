@@ -18,4 +18,6 @@ branches:
 install:
 - travis_retry npm install -g
 script:
+- ls -lah
+- which mocha
 - npm test
