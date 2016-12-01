@@ -2,7 +2,7 @@ sudo: required
 dist: trusty
 language: node_js
 node_js:
-- 6.2.2
+- 6.9.1
 addons:
   apt:
     sources:
@@ -18,4 +18,6 @@ branches:
 install:
 - travis_retry npm install -g
 script:
+- ls -lah
+- which mocha
 - npm test

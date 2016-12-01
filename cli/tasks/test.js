@@ -25,21 +25,30 @@ function task(cli, project) {
           let testPromiseFactories = [];
 
           if (!args.environment || args.environment == 'server') {
-            let serverTest = build(project, this, 'server')
-              .then(() => instrumentServer(project, this))
-              .then(() => testServer(project, this));
-            testPromiseFactories.push(() => serverTest);
+            testPromiseFactories.push(() => {
+              return build(project, this, 'server')
+                .then(() => instrumentServer(project, this))
+                .then(() => testServer(project, this))
+                .then(() => 'server test completed');
+            });
           }
 
           if (!args.environment || args.environment == 'browser') {
-            testPromiseFactories.push(() => testBrowser(project, this));
+            testPromiseFactories.unshift(() => {
+              return testBrowser(project, this)
+                .then(() => 'browser test completed');
+            });
           }
 
           if (args.options.serial) {
+            cli.log('running tests in serial');
             //run promises in serial
             return testPromiseFactories.reduce((prior, next) => {
-              return prior.then(() => next());
-            }, Promise.resolve()); // initial
+              return prior.then((cliOut) => {
+                cli.log(cliOut);
+                return next();
+              });
+            }, Promise.resolve('init')); // initial
           }
 
           return Promise.all(testPromiseFactories.map(pf => pf()));
@@ -81,23 +90,20 @@ function testServer(project, cli) {
 
     const config = {
       source: [
+        path.resolve(__dirname, '../..', 'server/testShim.js'),
         project.paths.destination.server + '/**/*.js',
-        '!' + project.paths.destination.server + '/**/bootstrap.js'
+        project.paths.destination.common + '/**/*.js',
+        '!' + project.paths.destination.server + '/**/bootstrap.js',
+        '!' + project.paths.destination.server + '/**/main.js'
       ],
       coverage: project.paths.destination.coverage + '/server/js'
     };
 
-    cli.log('Testing server');
-
-    Error.stackTraceLimit = Infinity;
-
-    require('core-js');
-    require('reflect-metadata');
-    require('zone.js/dist/zone-node');
-    require('zone.js/dist/async-test');
-
     project.gulp.src(config.source, {cwd: project.basePath})
       .pipe(plumber(reject))
+      // .pipe(tap((file, t) => {
+      //   cli.log(file.path);
+      // }))
       // Run specs
       .pipe(jasmine({
           verbose: true,
@@ -106,12 +112,31 @@ function testServer(project, cli) {
           })
         })
       )
-      // Creating the reports after tests ran
+      // .on('jasmineDone', () => {
+      //   cli.log('jasmine done called');
+      //
+      //   // istanbul.writeReports({
+      //   //   dir: config.coverage,
+      //   //   reporters: ['json']
+      //   // })
+      //
+      //   // resolve();
+      //
+      // })
+      // // Creating the reports after tests ran
       .pipe(istanbul.writeReports({
         dir: config.coverage,
         reporters: ['json']
       }))
-      .on('end', resolve);
+      .on('end', () => {
+        cli.log(' end called');
+        resolve();
+      })
+      // .on('jasmineDone', () => {
+      //   cli.log('jasmine done called');
+      //   resolve();
+      // });
+
   });
 }
 

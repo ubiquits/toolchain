@@ -6,6 +6,8 @@ const {websocketServer} = require('./websocketServer');
 
 const Webpack = require('webpack');
 
+console.log(`Loading entrypoint bootstrap [${process.env.NODEMON_ENTRYPOINT}]`);
+
 const bootstrap = require(process.env.NODEMON_ENTRYPOINT).default;
 
 module.exports = bootstrap()

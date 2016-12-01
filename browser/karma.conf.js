@@ -7,13 +7,13 @@ module.exports = (config) => {
 
     files: [
       {
-        pattern: `${__dirname}/karma-test-shim.js`,
+        pattern: `${__dirname}/karmaTestShim.js`,
         watched: false
       }
     ],
 
     preprocessors: {
-      [`${__dirname}/karma-test-shim.js`]: ['coverage', 'webpack', 'sourcemap']
+      [`${__dirname}/karmaTestShim.js`]: ['coverage', 'webpack', 'sourcemap']
     },
 
     webpack: webpackConfig,

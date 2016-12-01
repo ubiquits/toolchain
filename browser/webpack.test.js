@@ -35,10 +35,10 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        loader: 'null'
+        loader: 'raw'
       },
       {
-        test: /karma-test-shim\.js$/,
+        test: /karmaTestShim\.js$/,
         loader: 'string-replace',
         query: {
           search: '%working-dir%',

@@ -2,7 +2,9 @@ const sourcemaps = require('gulp-sourcemaps');
 const merge2     = require('merge2');
 const chalk      = require('chalk');
 var spawn        = require('child_process').spawn;
-const fs       = require('fs-extra');
+const plumber      = require('gulp-plumber');
+const fs         = require('fs-extra');
+const preset2015 = require('babel-preset-es2015');
 
 const {clean} = require('./clean');
 
@@ -47,12 +49,18 @@ function build(project, cli, context) {
         color = 'green';
       }
 
-      this.log(chalk[color](`typescript compiler exited with code ${code}`));
-      code === 0 ? resolve() : reject();
+      cli.log(chalk[color](`typescript compiler exited with code ${code}`));
+
+      if (code !== 0) {
+        return reject(code);
+      }
+
+      resolve();
+
     });
 
     compiler.on('error', (code) => {
-      this.log(chalk.red(`Failed to run '${args}'.\n${code}`));
+      cli.log(chalk.red(`Failed to run '${args}'.\n${code}`));
       reject();
     });
 

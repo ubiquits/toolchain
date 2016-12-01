@@ -29,7 +29,7 @@ class UbiquitsProject {
           tsConfig: this.basePath + '/tsconfig.browser.json',
         },
         all: {
-          tsConfig: this.basePath + '/tsconfig.all.json',
+          tsConfig: this.basePath + '/tsconfig.json',
         },
         docs: {
           base: './docs',
@@ -43,6 +43,7 @@ class UbiquitsProject {
         dist: './dist',
         coverage: './coverage',
         server: 'dist/server',
+        common: 'dist/common',
         browser: 'dist/browser',
         docs: './dist-docs'
       }
